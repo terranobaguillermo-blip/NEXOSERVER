@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NEXXOSERVER | ARK PvE</title>
+
+  <meta name="description" content="NEXXOSERVER es un servidor ARK Survival Evolved PvE con rates x5, eventos y ruleta.">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #0b1d26, #020b10);
+      color: #e0f7ff;
+    }
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: url('https://images.unsplash.com/photo-1546443046-ed1ce6ffd1ab') center/cover no-repeat;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+    }
+
+    header .content {
+      position: relative;
+      z-index: 1;
+      padding: 40px;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      color: #00eaff;
+      letter-spacing: 4px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 15px;
+      padding: 15px 40px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #00eaff, #0077ff);
+      color: #000;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 30px;
+      border: none;
+      text-align: center;
+      width: 260px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #020b10;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="content">
+    <h1>NEXXOSERVER</h1>
+    <p>Servidor ARK Survival Evolved · PvE · Rates x5</p>
+
+    <!-- RULETA CONECTADA -->
+    <a href="/ruleta.html" class="btn">🎰 RULETA DE EVENTOS</a>
+  </div>
+</header>
+
+<section>
+
+  <div class="card">
+    <h2>🦖 INFORMACIÓN DEL SERVIDOR</h2>
+    <p>PvE · Sin mods · Comunidad activa · Eventos semanales</p>
+  </div>
+
+  <div class="card">
+    <h2>🚀 CONECTAR AL SERVIDOR</h2>
+    <p>IP:</p>
+    <input id="ip" value="5.175.181.125:7780" readonly>
+    <br><br>
+    <a href="steam://connect/5.175.181.125:27016" class="btn">ENTRAR CON STEAM</a>
+    <a href="#" class="btn"
+       onclick="alert('En Epic Games abre la consola y escribe:\nopen 5.175.181.125:7780')">
+       ENTRAR CON EPIC
+    </a>
+  </div>
+
+  <div class="card">
+    <h2>💬 COMUNIDAD</h2>
+    <a href="https://discord.gg/PATsyqCC" target="_blank" class="btn">
+      UNIRSE AL DISCORD
+    </a>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 NEXXOSERVER · ARK PvE
+</footer>
+
+</body>
+</html>

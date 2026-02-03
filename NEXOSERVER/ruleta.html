@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🎰 Ruleta | NEXXOSERVER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #0b1d26, #020b10);
+      color: #e0f7ff;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    h1 { color: #00eaff; }
+
+    input {
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      text-align: center;
+      margin-bottom: 15px;
+      width: 220px;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 20px auto;
+    }
+
+    .pointer {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid #00eaff;
+    }
+
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 8px solid #00eaff;
+      background: conic-gradient(
+        #00eaff 0deg 72deg,
+        #0077ff 72deg 144deg,
+        #00ffaa 144deg 216deg,
+        #ffaa00 216deg 288deg,
+        #ff4d4d 288deg 360deg
+      );
+      transition: transform 4s cubic-bezier(.17,.67,.83,.67);
+    }
+
+    .btn {
+      padding: 14px 35px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #00eaff, #0077ff);
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 15px;
+    }
+
+    .history {
+      margin-top: 40px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .history h3 {
+      text-align: center;
+      color: #00eaff;
+    }
+
+    .history li {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🎰 RULETA NEXXOSERVER</h1>
+
+<input id="player" placeholder="Tu nombre en ARK">
+
+<div class="wheel-container">
+  <div class="pointer"></div>
+  <div id="wheel" class="wheel"></div>
+</div>
+
+<button id="spinBtn" class="btn" onclick="spin()">GIRAR RULETA</button>
+
+<p id="result"></p>
+
+<div class="history">
+  <h3>🌍 Últimos ganadores</h3>
+  <ul id="historyList"></ul>
+</div>
+
+<script>
+  const premios = JSON.parse(localStorage.getItem('premios_ruleta')) || [
+    'Recursos PvE',
+    'Dino aleatorio',
+    'Skin especial',
+    'Premio épico',
+    'Nada 😈'
+  ];
+
+  const historyList = document.getElementById('historyList');
+  const wheel = document.getElementById('wheel');
+
+  function cargarHistorial() {
+    const historial = JSON.parse(localStorage.getItem('historial_ruleta')) || [];
+    historyList.innerHTML = '';
+    historial.slice(-10).reverse().forEach(h => {
+      const li = document.createElement('li');
+      li.textContent = `🎁 ${h.nombre} → ${h.premio} (${h.fecha})`;
+      historyList.appendChild(li);
+    });
+  }
+
+  function spin() {
+    const nombre = document.getElementById('player').value.trim();
+    if (!nombre) {
+      alert('Escribe tu nombre');
+      return;
+    }
+
+    const i = Math.floor(Math.random() * premios.length);
+    const rot = 1440 + (i * (360 / premios.length));
+    wheel.style.transform = `rotate(${rot}deg)`;
+
+    setTimeout(() => {
+      const premio = premios[i];
+      document.getElementById('result').textContent = `🎉 ${nombre}, ganaste: ${premio}`;
+
+      const historial = JSON.parse(localStorage.getItem('historial_ruleta')) || [];
+      historial.push({
+        nombre,
+        premio,
+        fecha: new Date().toLocaleString()
+      });
+      localStorage.setItem('historial_ruleta', JSON.stringify(historial));
+      cargarHistorial();
+    }, 4000);
+  }
+
+  cargarHistorial();
+</script>
+
+</body>
+</html>

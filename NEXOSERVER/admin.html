@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🛠 Admin Ruleta | NEXXOSERVER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #0b1d26, #020b10);
+      color: #e0f7ff;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    h1 { color: #00eaff; }
+
+    .box {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 24px;
+      max-width: 450px;
+      margin: auto;
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 20px;
+      border: none;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #00eaff, #0077ff);
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 8px;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+
+<h1>🛠 CONSOLA ADMIN</h1>
+
+<div id="login" class="box">
+  <input type="password" id="password" placeholder="Contraseña admin">
+  <button class="btn" onclick="login()">ENTRAR</button>
+</div>
+
+<div id="panel" class="box hidden">
+  <h2>Control total</h2>
+
+  <button class="btn" onclick="abrirRuleta()">🟢 Abrir Ruleta</button>
+  <button class="btn" onclick="cerrarRuleta()">🔴 Cerrar Ruleta</button>
+  <button class="btn" onclick="resetRuleta()">🔄 Resetear Ruleta</button>
+
+  <h3>🎁 Premios (uno por línea)</h3>
+  <textarea id="premios"></textarea>
+  <button class="btn" onclick="guardarPremios()">💾 Guardar Premios</button>
+
+  <p id="status"></p>
+
+  <a href="/index.html">⬅ Volver al inicio</a>
+</div>
+
+<script>
+  const ADMIN_PASSWORD = "Playruleta2026";
+
+  function login() {
+    if (document.getElementById('password').value === ADMIN_PASSWORD) {
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('panel').classList.remove('hidden');
+      cargarPremios();
+    } else {
+      alert("Contraseña incorrecta");
+    }
+  }
+
+  function abrirRuleta() {
+    localStorage.setItem('ruleta_abierta', 'true');
+    document.getElementById('status').textContent = "🟢 Ruleta abierta";
+  }
+
+  function cerrarRuleta() {
+    localStorage.setItem('ruleta_abierta', 'false');
+    document.getElementById('status').textContent = "🔴 Ruleta cerrada";
+  }
+
+  function resetRuleta() {
+    localStorage.removeItem('ruleta_usada');
+    document.getElementById('status').textContent = "🔄 Ruleta reseteada";
+  }
+
+  function cargarPremios() {
+    const premios = JSON.parse(localStorage.getItem('premios_ruleta')) || [];
+    document.getElementById('premios').value = premios.join('\n');
+  }
+
+  function guardarPremios() {
+    const premios = document.getElementById('premios').value
+      .split('\n')
+      .filter(p => p.trim() !== '');
+    localStorage.setItem('premios_ruleta', JSON.stringify(premios));
+    document.getElementById('status').textContent = "🎁 Premios guardados";
+  }
+</script>
+
+</body>
+</html>
